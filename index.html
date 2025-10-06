@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Search Pro - Free Research Tool</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-search"></i>
+                <h1>Academic Search Pro</h1>
+            </div>
+            <p class="tagline">Free systematic review tool for researchers</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-card">
+                <div class="search-mode-toggle">
+                    <button class="mode-btn active" data-mode="simple">Quick Search</button>
+                    <button class="mode-btn" data-mode="advanced">Advanced Search</button>
+                </div>
+
+                <!-- Simple Search -->
+                <div class="search-interface" id="simple-search">
+                    <div class="search-input-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="simple-query" 
+                               placeholder="Enter your research topic (e.g., digital twins in geriatric care)..."
+                               class="search-input">
+                        <button onclick="performSearch()" class="search-btn">
+                            <i class="fas fa-paper-plane"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Search -->
+                <div class="search-interface" id="advanced-search" style="display: none;">
+                    <div class="query-builder">
+                        <div class="query-block" data-id="1">
+                            <select class="operator-select">
+                                <option value="AND">AND</option>
+                                <option value="OR">OR</option>
+                                <option value="NOT">NOT</option>
+                            </select>
+                            <input type="text" class="query-input" placeholder="Enter search term...">
+                            <button class="remove-btn" onclick="removeQueryBlock(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="query-actions">
+                        <button onclick="addQueryBlock('AND')" class="add-btn">
+                            <i class="fas fa-plus"></i> Add AND
+                        </button>
+                        <button onclick="addQueryBlock('OR')" class="add-btn">
+                            <i class="fas fa-plus"></i> Add OR
+                        </button>
+                        <button onclick="performAdvancedSearch()" class="search-btn">
+                            <i class="fas fa-paper-plane"></i> Advanced Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Sources:</label>
+                        <div class="source-checkboxes">
+                            <label><input type="checkbox" name="source" value="pubmed" checked> PubMed</label>
+                            <label><input type="checkbox" name="source" value="arxiv" checked> arXiv</label>
+                            <label><input type="checkbox" name="source" value="core"> CORE</label>
+                            <label><input type="checkbox" name="source" value="crossref"> Crossref</label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>Year Range:</label>
+                            <div class="year-inputs">
+                                <input type="number" id="year-min" placeholder="From" min="1900" max="2024">
+                                <span>-</span>
+                                <input type="number" id="year-max" placeholder="To" min="1900" max="2024">
+                            </div>
+                        </div>
+                        
+                        <div class="filter-item">
+                            <label>Max Results:</label>
+                            <select id="max-results">
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Searching academic databases...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results-section" class="results-section hidden">
+            <div class="results-header">
+                <h2 id="results-count">Search Results</h2>
+                <div class="results-actions">
+                    <button onclick="exportToCSV()" class="export-btn">
+                        <i class="fas fa-download"></i> Export CSV
+                    </button>
+                    <button onclick="saveSearch()" class="save-btn">
+                        <i class="fas fa-save"></i> Save Search
+                    </button>
+                </div>
+            </div>
+            
+            <div id="results-container" class="results-container">
+                <!-- Results will be populated here -->
+            </div>
+        </section>
+
+        <!-- No Results -->
+        <div id="no-results" class="no-results hidden">
+            <i class="fas fa-search fa-3x"></i>
+            <h3>No papers found</h3>
+            <p>Try adjusting your search terms or filters</p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by free academic APIs | Built for researchers</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
